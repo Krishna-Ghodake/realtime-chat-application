@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const db = require("./database/db");
 const { Server } = require("socket.io");
+const http = require("http");
 
 const app = express();
 
@@ -65,9 +66,7 @@ app.get("/api/messages", (req, res) => {
   });
 });
 
-const PORT = 5001;
-
-const http = require("http");
+const PORT = process.env.PORT || 5001;
 
 const server = http.createServer(app);
 
@@ -89,6 +88,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
 });
